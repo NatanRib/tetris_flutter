@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tetris/pieces/piece.dart';
-import 'package:tetris/pieces/piece_l.dart';
 import 'package:tetris/widgets/board.dart';
+
+import 'controllers/engine_controller.dart';
 
 class Engine extends StatefulWidget {
   const Engine({super.key});
@@ -19,30 +19,16 @@ class _BoardState extends State<Engine> {
   void initState() {
     super.initState();
     controller = EngineController(() => setState(() {}));
-    controller.gameLoop();
+    controller.startGame();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Board(piece: controller.currentPiece));
-  }
-}
-
-class EngineController {
-  Piece currentPiece = PieceL();
-  Function updateState;
-
-  EngineController(this.updateState);
-
-  void gameLoop() {
-    var frameRate = const Duration(milliseconds: 500);
-    Timer.periodic(frameRate, (timer) {
-      moveDown();
-      updateState();
-    });
-  }
-
-  void moveDown() {
-    currentPiece.moveDown();
+    return Scaffold(
+      body: Board(
+        piece: controller.currentPiece,
+        ocupedPixels: controller.boardPixelsOccuped,
+      ),
+    );
   }
 }
