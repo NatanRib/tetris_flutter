@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:tetris/pieces/piece_direction_enum.dart';
-import 'package:tetris/utils/size_constants.dart';
+import 'package:tetris/utils/board_utils.dart';
 
 abstract class Piece {
   abstract List<int> defaultPixels;

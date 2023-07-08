@@ -10,7 +10,7 @@ import 'package:tetris/pieces/piece_o.dart';
 import 'package:tetris/pieces/piece_s.dart';
 import 'package:tetris/pieces/piece_t.dart';
 import 'package:tetris/pieces/piece_z.dart';
-import 'package:tetris/utils/size_utils.dart';
+import 'package:tetris/utils/board_utils.dart';
 
 class EngineController {
   late Piece currentPiece;

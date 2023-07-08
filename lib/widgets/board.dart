@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tetris/pieces/piece.dart';
-import 'package:tetris/utils/size_constants.dart';
+import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/widgets/pixel.dart';
 
 class Board extends StatelessWidget {
