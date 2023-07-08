@@ -25,6 +25,7 @@ class _BoardState extends State<Engine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Board(
         piece: controller.currentPiece,
         ocupedPixels: controller.occupiedBoardPixels,
