@@ -3,7 +3,7 @@ import 'package:tetris/pieces/piece_direction_enum.dart';
 import 'package:tetris/widgets/board.dart';
 import 'package:tetris/widgets/input_controllers.dart';
 
-import 'controllers/engine_controller.dart';
+import '/engine_controller.dart';
 
 class Engine extends StatefulWidget {
   const Engine({super.key});
