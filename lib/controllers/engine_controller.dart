@@ -1,25 +1,38 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tetris/pieces/piece.dart';
 import 'package:tetris/pieces/piece_direction_enum.dart';
+import 'package:tetris/pieces/piece_j.dart';
 import 'package:tetris/pieces/piece_l.dart';
 import 'package:tetris/pieces/piece_o.dart';
+import 'package:tetris/pieces/piece_s.dart';
+import 'package:tetris/pieces/piece_t.dart';
+import 'package:tetris/pieces/piece_z.dart';
 import 'package:tetris/utils/size_constants.dart';
 
 class EngineController {
   late Piece currentPiece;
   Function updateState;
-  List<List<Color?>> boardPixelsOccuped = List.generate(
+  List<List<Color?>> occupiedBoardPixels = List.generate(
     boardColumnLenght,
     (i) => List.generate(boardRowLenght, (j) => null),
   );
+  List<Piece> availablePieces = [
+    PieceL(),
+    PieceO(),
+    PieceZ(),
+    PieceJ(),
+    PieceS(),
+    PieceT()
+  ];
 
   EngineController(this.updateState);
 
   void startGame() {
-    currentPiece = PieceO()..pixels.sort((a, b) => b.compareTo(a));
-    const flameRate = Duration(milliseconds: 1500);
+    generatePiece();
+    const flameRate = Duration(milliseconds: 400);
     gameLoop(flameRate);
   }
 
@@ -28,7 +41,6 @@ class EngineController {
       checkLanding();
       moveDown();
       updateState();
-      print(currentPiece.pixels);
     });
   }
 
@@ -37,10 +49,10 @@ class EngineController {
   }
 
   bool checkCollision(PieceDirectionEnum direction) {
-    for (var i = 0; i < currentPiece.pixels.length; i++) {
-      int currentPixel = currentPiece.pixels[i];
+    for (var i = 0; i < currentPiece.currentPixels.length; i++) {
+      int currentPixel = currentPiece.currentPixels[i];
       print(
-          "validando colisao da peca $currentPixel, tamanho dos pixels ${currentPiece.pixels.length}");
+          "validando colisao da peca $currentPixel, tamanho dos pixels ${currentPiece.currentPixels.length}");
       int rowPosition = getRowOfIndex(currentPixel);
       int collumnPosition = getColumnOfIndex(currentPixel);
 
@@ -59,9 +71,6 @@ class EngineController {
       if (rowPosition >= boardColumnLenght ||
           collumnPosition < 0 ||
           collumnPosition >= boardRowLenght) {
-        int realrowPosition = getRowOfIndex(currentPiece.pixels[i]);
-        int realcollumnPosition = getColumnOfIndex(currentPiece.pixels[i]);
-        print("Colidiu em ${currentPiece.pixels}");
         return true;
       }
 
@@ -72,11 +81,11 @@ class EngineController {
 
   void checkLanding() {
     if (checkCollision(PieceDirectionEnum.down)) {
-      for (var i = 0; i < currentPiece.pixels.length; i++) {
-        int column = getColumnOfIndex(currentPiece.pixels[i]);
-        int row = getRowOfIndex(currentPiece.pixels[i]);
+      for (var i = 0; i < currentPiece.currentPixels.length; i++) {
+        int column = getColumnOfIndex(currentPiece.currentPixels[i]);
+        int row = getRowOfIndex(currentPiece.currentPixels[i]);
         if (row >= 0 && column >= 0 && row <= boardColumnLenght) {
-          boardPixelsOccuped[row][column] = currentPiece.color;
+          occupiedBoardPixels[row][column] = currentPiece.color;
         }
       }
       generatePiece();
@@ -84,6 +93,9 @@ class EngineController {
   }
 
   void generatePiece() {
-    currentPiece = PieceO(); //TODO: random generate piece
+    int randomPieceIndex = Random().nextInt(5);
+    Piece newPiece = availablePieces[randomPieceIndex]
+      ..initializeOnTopOfBoard();
+    currentPiece = newPiece;
   }
 }

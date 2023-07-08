@@ -27,7 +27,7 @@ class _BoardState extends State<Engine> {
     return Scaffold(
       body: Board(
         piece: controller.currentPiece,
-        ocupedPixels: controller.boardPixelsOccuped,
+        ocupedPixels: controller.occupiedBoardPixels,
       ),
     );
   }

@@ -3,8 +3,9 @@ import 'package:tetris/pieces/piece.dart';
 
 class PieceS extends Piece {
   @override
-  List<int> pixels = [3, 4, 14, 15];
-
-  @override
   Color color = Colors.teal;
+  @override
+  List<int> currentPixels = [3, 4, 14, 15];
+  @override
+  List<int> defaultPixels = [3, 4, 14, 15];
 }

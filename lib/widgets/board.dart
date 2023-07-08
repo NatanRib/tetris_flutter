@@ -29,7 +29,7 @@ class Board extends StatelessWidget {
         int row = getRowIndex(index);
         int column = getColumnIndex(index);
 
-        if (piece.pixels.contains(index)) {
+        if (piece.currentPixels.contains(index)) {
           return Pixel(
             color: piece.color,
             text: index.toString(),
