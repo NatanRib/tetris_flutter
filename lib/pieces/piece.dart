@@ -15,8 +15,14 @@ abstract class Piece {
         }
         break;
       case PieceDirectionEnum.left:
+        for (int i = 0; i < currentPixels.length; i++) {
+          currentPixels[i]--;
+        }
         break;
       case PieceDirectionEnum.right:
+        for (int i = 0; i < currentPixels.length; i++) {
+          currentPixels[i]++;
+        }
         break;
     }
   }

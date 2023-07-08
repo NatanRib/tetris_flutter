@@ -1,7 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:tetris/pieces/piece_direction_enum.dart';
 import 'package:tetris/widgets/board.dart';
+import 'package:tetris/widgets/input_controllers.dart';
 
 import 'controllers/engine_controller.dart';
 
@@ -26,9 +26,25 @@ class _BoardState extends State<Engine> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Board(
-        piece: controller.currentPiece,
-        ocupedPixels: controller.occupiedBoardPixels,
+      body: Column(
+        children: [
+          Expanded(
+            flex: 13,
+            child: Board(
+              piece: controller.currentPiece,
+              ocupedPixels: controller.occupiedBoardPixels,
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: InputController(
+              leftButtonFunction: () =>
+                  controller.movePiece(PieceDirectionEnum.left),
+              rightButtonFunction: () =>
+                  controller.movePiece(PieceDirectionEnum.right),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -39,13 +39,15 @@ class EngineController {
   void gameLoop(Duration flameRate) {
     Timer.periodic(flameRate, (timer) {
       checkLanding();
-      moveDown();
+      movePiece(PieceDirectionEnum.down);
       updateState();
     });
   }
 
-  void moveDown() {
-    currentPiece.movePiece(PieceDirectionEnum.down);
+  void movePiece(PieceDirectionEnum direction) {
+    print("movendo peça\nDe: ${currentPiece.currentPixels}");
+    if (!checkCollision(direction)) currentPiece.movePiece(direction);
+    print("Para: ${currentPiece.currentPixels}");
   }
 
   bool checkCollision(PieceDirectionEnum direction) {
@@ -65,7 +67,7 @@ class EngineController {
           rowPosition++;
           break;
       }
-      List<Color?>? occupiedRow = rowPosition > 0
+      List<Color?>? occupiedRow = rowPosition >= 0
           ? occupiedBoardPixels.elementAtOrNull(rowPosition)
           : null;
 

@@ -18,50 +18,38 @@ class Board extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            color: Colors.white,
-            child: GridView.builder(
-              itemCount: columnsLength * rowsLenght,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: rowsLenght,
-              ),
-              itemBuilder: (context, index) {
-                int row = getRowOfIndex(index);
-                int column = getColumnOfIndex(index);
-
-                if (piece.currentPixels.contains(index)) {
-                  return Pixel(
-                    color: piece.color,
-                    text: index.toString(),
-                  );
-                } else if (ocupedPixels[row][column] != null) {
-                  //TODO: Não esta detectando os pixels ja pintados
-                  return Pixel(
-                    color: ocupedPixels[row][column]!,
-                    text: "*",
-                  );
-                } else {
-                  return Pixel(
-                    color: Colors.black,
-                    text: index.toString(),
-                  );
-                }
-              },
-            ),
-          ),
+    return Container(
+      padding: const EdgeInsets.only(top: 3),
+      color: Colors.white,
+      child: GridView.builder(
+        itemCount: columnsLength * rowsLenght,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: rowsLenght,
         ),
-        //TODO: add game input controllers
-        Container(
-          height: 145,
-          child: Row(
-            children: [],
-          ),
-        )
-      ],
+        itemBuilder: (context, index) {
+          int row = getRowOfIndex(index);
+          int column = getColumnOfIndex(index);
+
+          if (piece.currentPixels.contains(index)) {
+            return Pixel(
+              color: piece.color,
+              text: index.toString(),
+            );
+          } else if (ocupedPixels[row][column] != null) {
+            //TODO: Não esta detectando os pixels ja pintados
+            return Pixel(
+              color: ocupedPixels[row][column]!,
+              text: "*",
+            );
+          } else {
+            return Pixel(
+              color: Colors.black,
+              text: index.toString(),
+            );
+          }
+        },
+      ),
     );
   }
 }
