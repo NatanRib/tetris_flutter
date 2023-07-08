@@ -32,8 +32,8 @@ class EngineController {
 
   void startGame() {
     generatePiece();
-    const flameRate = Duration(milliseconds: 400);
-    gameLoop(flameRate);
+    const velocity = Duration(milliseconds: 400);
+    gameLoop(velocity);
   }
 
   void gameLoop(Duration flameRate) {
@@ -51,8 +51,6 @@ class EngineController {
   bool checkCollision(PieceDirectionEnum direction) {
     for (var i = 0; i < currentPiece.currentPixels.length; i++) {
       int currentPixel = currentPiece.currentPixels[i];
-      print(
-          "validando colisao da peca $currentPixel, tamanho dos pixels ${currentPiece.currentPixels.length}");
       int rowPosition = getRowOfIndex(currentPixel);
       int collumnPosition = getColumnOfIndex(currentPixel);
 
@@ -67,10 +65,16 @@ class EngineController {
           rowPosition++;
           break;
       }
+      List<Color?>? occupiedRow = rowPosition > 0
+          ? occupiedBoardPixels.elementAtOrNull(rowPosition)
+          : null;
 
       if (rowPosition >= boardColumnLenght ||
           collumnPosition < 0 ||
           collumnPosition >= boardRowLenght) {
+        return true;
+      } else if (occupiedRow != null &&
+          occupiedRow.elementAt(collumnPosition) != null) {
         return true;
       }
 
