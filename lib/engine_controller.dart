@@ -25,14 +25,15 @@ class EngineController {
     PieceZ(),
     PieceJ(),
     PieceS(),
-    PieceT()
+    PieceT(),
+    PieceO()
   ];
 
   EngineController(this.updateState);
 
   void startGame() {
     generatePiece();
-    const velocity = Duration(milliseconds: 400);
+    const velocity = Duration(milliseconds: 200);
     gameLoop(velocity);
   }
 
@@ -40,14 +41,13 @@ class EngineController {
     Timer.periodic(flameRate, (timer) {
       checkLanding();
       movePiece(PieceDirectionEnum.down);
+      cleanCompletedRow();
       updateState();
     });
   }
 
   void movePiece(PieceDirectionEnum direction) {
-    print("movendo peça\nDe: ${currentPiece.currentPixels}");
     if (!checkCollision(direction)) currentPiece.movePiece(direction);
-    print("Para: ${currentPiece.currentPixels}");
   }
 
   bool checkCollision(PieceDirectionEnum direction) {
@@ -99,9 +99,35 @@ class EngineController {
   }
 
   void generatePiece() {
-    int randomPieceIndex = Random().nextInt(5);
+    int randomPieceIndex = Random().nextInt(availablePieces.length);
     Piece newPiece = availablePieces[randomPieceIndex]
       ..initializeOnTopOfBoard();
     currentPiece = newPiece;
+  }
+
+  void cleanCompletedRow() {
+    List<int> completedRows = _getCompletedRows();
+    for (var row in completedRows) {
+      for (var i = row; i >= 0; i--) {
+        if (i == 0) {
+          occupiedBoardPixels[i] =
+              List.generate(boardRowLenght, (boardRowLenght) => null);
+          continue;
+        }
+        List<Color?> nextRpw = List.from(occupiedBoardPixels[i - 1]);
+        occupiedBoardPixels[i] = nextRpw;
+      }
+    }
+  }
+
+  List<int> _getCompletedRows() {
+    List<int> completedRows = [];
+    for (var i = boardColumnLenght - 1; i >= 0; i--) {
+      if (occupiedBoardPixels[i].every((element) => element != null)) {
+        completedRows.add(i);
+      }
+    }
+    completedRows.sort();
+    return completedRows;
   }
 }
