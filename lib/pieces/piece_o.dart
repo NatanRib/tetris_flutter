@@ -8,4 +8,11 @@ class PieceO extends Piece {
   List<int> currentPixels = [4, 5, 14, 15];
   @override
   List<int> defaultPixels = [4, 5, 14, 15];
+  @override
+  int rotationStatesLenght = 1;
+
+  @override
+  void rotate(int rotationState) {
+    // this piece dont rotate
+  }
 }

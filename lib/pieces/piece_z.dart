@@ -8,4 +8,12 @@ class PieceZ extends Piece {
   List<int> defaultPixels = [4, 5, 13, 14];
   @override
   Color color = Colors.lightBlue;
+
+  @override
+  int rotationStatesLenght = 4;
+
+  @override
+  void rotate(int rotationState) {
+    // TODO: implement rotate
+  }
 }

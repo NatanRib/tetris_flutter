@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:tetris/pieces/piece.dart';
 import 'package:tetris/pieces/piece_direction_enum.dart';
+import 'package:tetris/pieces/piece_i.dart';
 import 'package:tetris/pieces/piece_j.dart';
 import 'package:tetris/pieces/piece_l.dart';
 import 'package:tetris/pieces/piece_o.dart';
@@ -20,20 +21,23 @@ class EngineController {
     (i) => List.generate(boardRowLenght, (j) => null),
   );
   List<Piece> availablePieces = [
-    PieceL(),
-    PieceO(),
-    PieceZ(),
-    PieceJ(),
-    PieceS(),
-    PieceT(),
-    PieceO()
+    // PieceL(),
+    // PieceO(),
+    // PieceZ(),
+    // PieceJ(),
+    // PieceS(),
+    // PieceT(),
+    // PieceO(),
+    PieceI()
   ];
+  int score = 0;
+  int currentPieceRotateState = 1;
 
   EngineController(this.updateState);
 
   void startGame() {
     generatePiece();
-    const velocity = Duration(milliseconds: 200);
+    const velocity = Duration(milliseconds: 1300);
     gameLoop(velocity);
   }
 
@@ -99,6 +103,7 @@ class EngineController {
   }
 
   void generatePiece() {
+    currentPieceRotateState = 1;
     int randomPieceIndex = Random().nextInt(availablePieces.length);
     Piece newPiece = availablePieces[randomPieceIndex]
       ..initializeOnTopOfBoard();
@@ -122,12 +127,27 @@ class EngineController {
 
   List<int> _getCompletedRows() {
     List<int> completedRows = [];
-    for (var i = boardColumnLenght - 1; i >= 0; i--) {
+    for (var i = 0; i < boardColumnLenght; i++) {
       if (occupiedBoardPixels[i].every((element) => element != null)) {
         completedRows.add(i);
       }
     }
-    completedRows.sort();
+    if (completedRows.isNotEmpty) increaseScore(completedRows.length);
     return completedRows;
+  }
+
+  void increaseScore(int multiply) {
+    score += 100 * multiply;
+  }
+
+  void rotatePiece() {
+    currentPieceRotateState++;
+    if (currentPieceRotateState <= currentPiece.rotationStatesLenght) {
+      currentPiece.rotate(currentPieceRotateState);
+    } else {
+      currentPieceRotateState = 1;
+      currentPiece.rotate(1);
+    }
+    print("object");
   }
 }

@@ -42,6 +42,8 @@ class _BoardState extends State<Engine> {
                   controller.movePiece(PieceDirectionEnum.left),
               rightButtonFunction: () =>
                   controller.movePiece(PieceDirectionEnum.right),
+              rotateButtonFunction: () => controller.rotatePiece(),
+              score: controller.score,
             ),
           )
         ],

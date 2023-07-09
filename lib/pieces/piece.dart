@@ -5,6 +5,7 @@ import 'package:tetris/utils/board_utils.dart';
 abstract class Piece {
   abstract List<int> defaultPixels;
   abstract List<int> currentPixels;
+  abstract int rotationStatesLenght;
   abstract Color color;
 
   void movePiece(PieceDirectionEnum direction) {
@@ -37,4 +38,6 @@ abstract class Piece {
   void resetPosition() {
     currentPixels = defaultPixels.map((e) => e).toList();
   }
+
+  void rotate(int rotationState);
 }

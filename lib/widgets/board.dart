@@ -34,7 +34,7 @@ class Board extends StatelessWidget {
           if (piece.currentPixels.contains(index)) {
             return Pixel(
               color: piece.color,
-              text: index.toString(),
+              text: piece.currentPixels.indexOf(index).toString(),
             );
           } else if (ocupedPixels[row][column] != null) {
             //TODO: Não esta detectando os pixels ja pintados
