@@ -21,13 +21,13 @@ class EngineController {
     (i) => List.generate(boardRowLenght, (j) => null),
   );
   List<Piece> availablePieces = [
-    // PieceL(),
-    // PieceO(),
-    // PieceZ(),
-    // PieceJ(),
-    // PieceS(),
-    // PieceT(),
-    // PieceO(),
+    PieceL(),
+    PieceO(),
+    PieceZ(),
+    PieceJ(),
+    PieceS(),
+    PieceT(),
+    PieceO(),
     PieceI()
   ];
   int score = 0;
@@ -37,7 +37,7 @@ class EngineController {
 
   void startGame() {
     generatePiece();
-    const velocity = Duration(milliseconds: 1300);
+    const velocity = Duration(milliseconds: 400);
     gameLoop(velocity);
   }
 
@@ -148,6 +148,5 @@ class EngineController {
       currentPieceRotateState = 1;
       currentPiece.rotate(1);
     }
-    print("object");
   }
 }

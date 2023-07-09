@@ -4,7 +4,7 @@ import 'package:tetris/utils/board_utils.dart';
 
 class PieceJ extends Piece {
   @override
-  Color color = Colors.amber;
+  Color color = const Color.fromARGB(255, 255, 7, 7);
   @override
   List<int> currentPixels = [5, 15, 25, 24];
   @override

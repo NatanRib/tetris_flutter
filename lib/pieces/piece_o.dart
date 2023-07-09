@@ -3,7 +3,7 @@ import 'package:tetris/pieces/piece.dart';
 
 class PieceO extends Piece {
   @override
-  Color color = Colors.purple;
+  Color color = const Color.fromARGB(255, 28, 208, 253);
   @override
   List<int> currentPixels = [4, 5, 14, 15];
   @override
