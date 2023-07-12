@@ -13,13 +13,10 @@ import 'package:tetris/pieces/piece_t.dart';
 import 'package:tetris/pieces/piece_z.dart';
 import 'package:tetris/utils/board_utils.dart';
 
-class EngineController {
+class GameController {
   late Piece currentPiece;
   Function updateState;
-  List<List<Color?>> occupiedBoardPixels = List.generate(
-    boardColumnLenght,
-    (i) => List.generate(boardRowLenght, (j) => null),
-  );
+  late List<List<Color?>> occupiedBoardPixels;
   List<Piece> availablePieces = [
     PieceL(),
     PieceO(),
@@ -32,10 +29,15 @@ class EngineController {
   ];
   int score = 0;
   int currentPieceRotateState = 1;
+  bool gameOver = false;
 
-  EngineController(this.updateState);
+  GameController(this.updateState);
 
   void startGame() {
+    occupiedBoardPixels = List.generate(
+      boardColumnLenght,
+      (i) => List.generate(boardRowLenght, (j) => null),
+    );
     generatePiece();
     const velocity = Duration(milliseconds: 400);
     gameLoop(velocity);
@@ -47,6 +49,7 @@ class EngineController {
       movePiece(PieceDirectionEnum.down);
       cleanCompletedRow();
       updateState();
+      if (gameOver) timer.cancel();
     });
   }
 
@@ -94,6 +97,10 @@ class EngineController {
       for (var i = 0; i < currentPiece.currentPixels.length; i++) {
         int column = getColumnOfIndex(currentPiece.currentPixels[i]);
         int row = getRowOfIndex(currentPiece.currentPixels[i]);
+        if (row < 0 && !gameOver) {
+          isGameOver();
+          return;
+        }
         if (row >= 0 && column >= 0 && row <= boardColumnLenght) {
           occupiedBoardPixels[row][column] = currentPiece.color;
         }
@@ -148,5 +155,15 @@ class EngineController {
       currentPieceRotateState = 1;
       currentPiece.rotate(1);
     }
+  }
+
+  void isGameOver() {
+    gameOver = true;
+  }
+
+  void restartGame() {
+    gameOver = false;
+    score = 0;
+    startGame();
   }
 }
