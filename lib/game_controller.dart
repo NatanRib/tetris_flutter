@@ -39,7 +39,7 @@ class GameController {
       (i) => List.generate(boardRowLenght, (j) => null),
     );
     generatePiece();
-    const velocity = Duration(milliseconds: 400);
+    const velocity = Duration(milliseconds: 800);
     gameLoop(velocity);
   }
 
