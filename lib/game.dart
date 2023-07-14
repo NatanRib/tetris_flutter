@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tetris/pieces/piece_direction_enum.dart';
+import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/widgets/board.dart';
 import 'package:tetris/widgets/input_controllers.dart';
 
@@ -37,46 +38,31 @@ class _BoardState extends State<Game> {
     if (controller.gameOver) gameOver(context);
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 13,
-            child: Board(
-              piece: controller.currentPiece,
-              ocupedPixels: controller.occupiedBoardPixels,
+      body: LayoutBuilder(builder: (context, constraints) {
+        return Column(
+          children: [
+            Expanded(
+              child: Board(
+                piece: controller.currentPiece,
+                ocupedPixels: controller.occupiedBoardPixels,
+                height: constraints.maxHeight * 0.808 / boardColumnLenght,
+                width: constraints.maxWidth / boardRowLenght,
+              ),
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: InputController(
-              leftButtonFunction: () =>
-                  controller.movePiece(PieceDirectionEnum.left),
-              rightButtonFunction: () =>
-                  controller.movePiece(PieceDirectionEnum.right),
-              rotateButtonFunction: () => controller.rotatePiece(),
-              score: controller.score,
+            SizedBox(
+              height: constraints.maxHeight * 0.16,
+              child: InputController(
+                leftButtonFunction: () =>
+                    controller.movePiece(PieceDirectionEnum.left),
+                rightButtonFunction: () =>
+                    controller.movePiece(PieceDirectionEnum.right),
+                rotateButtonFunction: () => controller.rotatePiece(),
+                score: controller.score,
+              ),
             ),
-          ),
-          // if (controller.gameOver) controller.isGameOver()
-          // AlertDialog(
-          //   content: Column(
-          //     mainAxisSize: MainAxisSize.min,
-          //     children: [
-          //       Text(
-          //         'Game Over :(',
-          //         style: TextStyle(
-          //           fontSize: 32,
-          //           fontWeight: FontWeight.bold,
-          //         ),
-          //       ),
-          //       BackButton(
-          //         onPressed: () => Navigator.pop(context),
-          //       )
-          //     ],
-          //   ),
-          // ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 

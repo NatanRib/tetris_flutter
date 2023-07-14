@@ -4,14 +4,14 @@ import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/widgets/pixel.dart';
 
 class Board extends StatelessWidget {
-  final int columnsLength;
-  final int rowsLenght;
+  final double height;
+  final double width;
   final Piece piece;
   final List<List<Color?>> ocupedPixels;
   const Board({
     super.key,
-    this.columnsLength = boardColumnLenght,
-    this.rowsLenght = boardRowLenght,
+    required this.height,
+    required this.width,
     required this.piece,
     required this.ocupedPixels,
   });
@@ -19,33 +19,35 @@ class Board extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 3),
+      // padding: const EdgeInsets.only(top: 3),
       color: Colors.white,
       child: GridView.builder(
-        itemCount: columnsLength * rowsLenght,
+        itemCount: boardColumnLenght * boardRowLenght,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: rowsLenght,
-        ),
+            crossAxisCount: boardRowLenght, mainAxisExtent: height),
         itemBuilder: (context, index) {
           int row = getRowOfIndex(index);
           int column = getColumnOfIndex(index);
-
+          double pixelWidth = width / boardRowLenght;
+          double pixelHeight = height / boardColumnLenght;
           if (piece.currentPixels.contains(index)) {
             return Pixel(
               color: piece.color,
-              text: piece.currentPixels.indexOf(index).toString(),
+              width: pixelWidth,
+              height: pixelHeight,
             );
           } else if (ocupedPixels[row][column] != null) {
-            //TODO: Não esta detectando os pixels ja pintados
             return Pixel(
               color: ocupedPixels[row][column]!,
-              text: "*",
+              width: pixelWidth,
+              height: pixelHeight,
             );
           } else {
             return Pixel(
               color: Colors.black,
-              text: index.toString(),
+              width: pixelWidth,
+              height: pixelHeight,
             );
           }
         },

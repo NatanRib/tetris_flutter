@@ -46,7 +46,7 @@ class GameController {
   void gameLoop(Duration flameRate) {
     Timer.periodic(flameRate, (timer) {
       checkLanding();
-      movePiece(PieceDirectionEnum.down);
+      _movePieceDown();
       cleanCompletedRow();
       updateState();
       if (gameOver) timer.cancel();
@@ -54,7 +54,16 @@ class GameController {
   }
 
   void movePiece(PieceDirectionEnum direction) {
-    if (!checkCollision(direction)) currentPiece.movePiece(direction);
+    if (!checkCollision(direction)) {
+      currentPiece.movePiece(direction);
+      updateState();
+    }
+  }
+
+  void _movePieceDown() {
+    if (!checkCollision(PieceDirectionEnum.down)) {
+      currentPiece.movePiece(PieceDirectionEnum.down);
+    }
   }
 
   bool checkCollision(PieceDirectionEnum direction) {
@@ -148,6 +157,8 @@ class GameController {
   }
 
   void rotatePiece() {
+    var side = _getDirectionOnBoard(currentPiece.currentPixels[1]);
+    if (checkCollision(side)) return;
     currentPieceRotateState++;
     if (currentPieceRotateState <= currentPiece.rotationStatesLenght) {
       currentPiece.rotate(currentPieceRotateState);
@@ -155,6 +166,7 @@ class GameController {
       currentPieceRotateState = 1;
       currentPiece.rotate(1);
     }
+    updateState();
   }
 
   void isGameOver() {
@@ -165,5 +177,11 @@ class GameController {
     gameOver = false;
     score = 0;
     startGame();
+  }
+
+  PieceDirectionEnum _getDirectionOnBoard(int index) {
+    return getColumnOfIndex(index) <= boardRowLenght / 2
+        ? PieceDirectionEnum.left
+        : PieceDirectionEnum.right;
   }
 }
