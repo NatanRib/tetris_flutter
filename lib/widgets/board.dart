@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:tetris/pieces/piece.dart';
 import 'package:tetris/utils/board_utils.dart';
+import 'package:tetris/utils/my_colors.dart';
 import 'package:tetris/widgets/pixel.dart';
 
 class Board extends StatelessWidget {
   final double height;
   final double width;
   final Piece piece;
+  final Color backgroundColor;
   final List<List<Color?>> ocupedPixels;
+
   const Board({
     super.key,
     required this.height,
     required this.width,
     required this.piece,
+    required this.backgroundColor,
     required this.ocupedPixels,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: const EdgeInsets.only(top: 3),
-      color: Colors.white,
+      color: backgroundColor,
       child: GridView.builder(
         itemCount: boardColumnLenght * boardRowLenght,
         physics: const NeverScrollableScrollPhysics(),
@@ -45,7 +48,7 @@ class Board extends StatelessWidget {
             );
           } else {
             return Pixel(
-              color: Colors.black,
+              color: grey,
               width: pixelWidth,
               height: pixelHeight,
             );

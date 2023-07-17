@@ -40,7 +40,7 @@ class GameController {
     );
     generatePiece();
     const velocity = Duration(milliseconds: 800);
-    gameLoop(velocity);
+    // gameLoop(velocity);
   }
 
   void gameLoop(Duration flameRate) {

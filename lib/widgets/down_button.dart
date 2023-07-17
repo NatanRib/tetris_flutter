@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tetris/utils/my_colors.dart';
 import 'package:tetris/widgets/down_button_controller.dart';
 
 class DownButton extends StatefulWidget {
@@ -15,10 +16,19 @@ class _DownButtonState extends State<DownButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: const Icon(
-        Icons.arrow_downward_rounded,
-        color: Colors.white,
-        size: 50,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+          color: blue,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        child: const Icon(
+          Icons.arrow_downward_rounded,
+          color: yellow,
+          size: 50,
+        ),
       ),
       onTapDown: (tap) =>
           downButtonController.initPress(widget.downButtonFunction),

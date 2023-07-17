@@ -30,7 +30,7 @@ class InputController extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 12.0),
                 child: button(
-                  Icons.arrow_back_ios,
+                  Icons.arrow_back,
                   leftButtonFunction,
                   false,
                   const EdgeInsets.only(left: 8),
@@ -52,7 +52,7 @@ class InputController extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 12.0),
                 child: button(
-                  Icons.arrow_back_ios,
+                  Icons.arrow_back,
                   rightButtonFunction,
                   true,
                   const EdgeInsets.only(right: 8),
@@ -71,17 +71,29 @@ class InputController extends StatelessWidget {
     bool isInvert,
     EdgeInsets edges,
   ) {
-    return IconButton(
-      padding: edges,
-      hoverColor: Colors.red,
+    return TextButton(
       onPressed: () => onPressed(),
-      icon: Icon(
+      child: Icon(
         icon,
-        size: 50,
         textDirection: isInvert ? TextDirection.rtl : TextDirection.ltr,
-        color: Colors.white,
+        size: 50,
       ),
-      color: Colors.white,
     );
+    // IconButton(
+    //   padding: edges,
+    //   hoverColor: Colors.red,
+    //   onPressed: () => onPressed(),
+    //   style: IconButton.styleFrom(
+    //     backgroundColor: const Color(0xFF001849),
+    //     foregroundColor: const Color(0xFF001849),
+    //   ),
+    //   icon: Icon(
+    //     icon,
+    //     size: 50,
+    //     textDirection: isInvert ? TextDirection.rtl : TextDirection.ltr,
+    //     color: Colors.white,
+    //   ),
+    //   color: const Color(0xFF001849),
+    // );
   }
 }

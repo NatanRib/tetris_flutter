@@ -21,7 +21,7 @@ class Pixel extends StatelessWidget {
       margin: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(3),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
         child: text != null
