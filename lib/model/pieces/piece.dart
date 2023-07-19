@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:tetris/pieces/piece_direction_enum.dart';
+import 'package:tetris/model/pieces/piece_direction_enum.dart';
 import 'package:tetris/utils/board_utils.dart';
 
 abstract class Piece {

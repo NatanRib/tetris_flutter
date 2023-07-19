@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tetris/widgets/down_button.dart';
+import 'package:tetris/view/widgets/down_button.dart';
 
 class InputController extends StatelessWidget {
   final Function leftButtonFunction;

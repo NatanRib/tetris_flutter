@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tetris/pieces/piece.dart';
+import 'package:tetris/model/pieces/piece.dart';
 
 class PieceO extends Piece {
   @override

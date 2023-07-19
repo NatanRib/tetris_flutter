@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tetris/pieces/piece.dart';
+import 'package:tetris/model/pieces/piece.dart';
 import 'package:tetris/utils/board_utils.dart';
 
 class PieceS extends Piece {

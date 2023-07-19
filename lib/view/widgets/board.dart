@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tetris/pieces/piece.dart';
+import 'package:tetris/model/pieces/piece.dart';
 import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/utils/my_colors.dart';
-import 'package:tetris/widgets/pixel.dart';
+import 'package:tetris/view/widgets/pixel.dart';
 
 class Board extends StatelessWidget {
   final double height;
@@ -28,7 +28,11 @@ class Board extends StatelessWidget {
         itemCount: boardColumnLenght * boardRowLenght,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: boardRowLenght, mainAxisExtent: height),
+          crossAxisCount: boardRowLenght,
+          mainAxisExtent: height * 0.98,
+          mainAxisSpacing: 3,
+          crossAxisSpacing: 3,
+        ),
         itemBuilder: (context, index) {
           int row = getRowOfIndex(index);
           int column = getColumnOfIndex(index);
@@ -48,7 +52,7 @@ class Board extends StatelessWidget {
             );
           } else {
             return Pixel(
-              color: grey,
+              color: MyColors.grey,
               width: pixelWidth,
               height: pixelHeight,
             );

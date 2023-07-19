@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tetris/game.dart';
 import 'package:tetris/utils/my_colors.dart';
+import 'package:tetris/view/pages/home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,11 +12,16 @@ void main() {
   runApp(
     MaterialApp(
       theme: ThemeData(
-        colorScheme: const ColorScheme.dark(background: blueGrey),
+        scaffoldBackgroundColor: MyColors.blueGrey,
+        textTheme: const TextTheme(
+          labelLarge: TextStyle(fontSize: 28, color: MyColors.yellow),
+        ),
+        colorScheme:
+            const ColorScheme.dark(background: Color.fromARGB(255, 7, 13, 19)),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: yellow,
-            backgroundColor: blue,
+            foregroundColor: MyColors.yellow,
+            backgroundColor: MyColors.blue,
             alignment: Alignment.center,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
@@ -26,7 +31,8 @@ void main() {
           ),
         ),
       ),
-      home: const Game(),
+      home: Home(),
+      // home: const Game(),
     ),
   );
 }

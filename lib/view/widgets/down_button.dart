@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tetris/utils/my_colors.dart';
-import 'package:tetris/widgets/down_button_controller.dart';
+import 'package:tetris/controller/down_button_controller.dart';
 
 class DownButton extends StatefulWidget {
   final Function downButtonFunction;
@@ -19,14 +19,14 @@ class _DownButtonState extends State<DownButton> {
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-          color: blue,
+          color: MyColors.blue,
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
         ),
         child: const Icon(
           Icons.arrow_downward_rounded,
-          color: yellow,
+          color: MyColors.yellow,
           size: 50,
         ),
       ),

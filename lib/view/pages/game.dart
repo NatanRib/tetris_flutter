@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:tetris/pieces/piece_direction_enum.dart';
+import 'package:tetris/model/pieces/piece_direction_enum.dart';
 import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/utils/my_colors.dart';
-import 'package:tetris/widgets/board.dart';
-import 'package:tetris/widgets/input_controllers.dart';
+import 'package:tetris/view/widgets/board.dart';
+import 'package:tetris/view/widgets/input_controllers.dart';
 
-import 'game_controller.dart';
+import '../../controller/game_controller.dart';
 
 class Game extends StatefulWidget {
   const Game({super.key});
@@ -31,19 +31,18 @@ class _BoardState extends State<Game> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: blueGrey,
+        backgroundColor: MyColors.blueGrey,
         title: Text(
           "Score: ${controller.score}",
           style: const TextStyle(
-            color: yellow,
+            color: MyColors.yellow,
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
       ),
-      // extendBodyBehindAppBar: true,
-      backgroundColor: blueGrey,
+      backgroundColor: MyColors.blueGrey,
       body: LayoutBuilder(builder: (context, constraints) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
@@ -53,7 +52,7 @@ class _BoardState extends State<Game> {
               Expanded(
                 child: Board(
                   piece: controller.currentPiece,
-                  backgroundColor: blueGrey,
+                  backgroundColor: MyColors.blueGrey,
                   ocupedPixels: controller.occupiedBoardPixels,
                   height: constraints.maxHeight * 0.782 / boardColumnLenght,
                   width: constraints.maxWidth / boardRowLenght,
