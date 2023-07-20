@@ -11,6 +11,7 @@ import 'package:tetris/model/pieces/piece_o.dart';
 import 'package:tetris/model/pieces/piece_s.dart';
 import 'package:tetris/model/pieces/piece_t.dart';
 import 'package:tetris/model/pieces/piece_z.dart';
+import 'package:tetris/model/store/game_store.dart';
 import 'package:tetris/utils/board_utils.dart';
 
 class GameController {
@@ -27,9 +28,11 @@ class GameController {
     PieceO(),
     PieceI()
   ];
+  final velocity = const Duration(milliseconds: 800);
   int score = 0;
   int currentPieceRotateState = 1;
-  bool gameOver = false;
+  // bool isGameOver = false;
+  // bool isPauseGame = false;
 
   GameController(this.updateState);
 
@@ -39,17 +42,17 @@ class GameController {
       (i) => List.generate(boardRowLenght, (j) => null),
     );
     generatePiece();
-    const velocity = Duration(milliseconds: 800);
-    // gameLoop(velocity);
+
+    gameLoop();
   }
 
-  void gameLoop(Duration flameRate) {
-    Timer.periodic(flameRate, (timer) {
+  void gameLoop() {
+    Timer.periodic(velocity, (timer) {
       checkLanding();
       _movePieceDown();
       cleanCompletedRow();
       updateState();
-      if (gameOver) timer.cancel();
+      if (GameStore.isGameOver || GameStore.isPaused) timer.cancel();
     });
   }
 
@@ -106,8 +109,8 @@ class GameController {
       for (var i = 0; i < currentPiece.currentPixels.length; i++) {
         int column = getColumnOfIndex(currentPiece.currentPixels[i]);
         int row = getRowOfIndex(currentPiece.currentPixels[i]);
-        if (row < 0 && !gameOver) {
-          isGameOver();
+        if (row < 0 && !GameStore.isGameOver) {
+          _gameOver();
           return;
         }
         if (row >= 0 && column >= 0 && row <= boardColumnLenght) {
@@ -169,19 +172,28 @@ class GameController {
     updateState();
   }
 
-  void isGameOver() {
-    gameOver = true;
-  }
-
-  void restartGame() {
-    gameOver = false;
-    score = 0;
-    startGame();
-  }
-
   PieceDirectionEnum _getDirectionOnBoard(int index) {
     return getColumnOfIndex(index) <= boardRowLenght / 2
         ? PieceDirectionEnum.left
         : PieceDirectionEnum.right;
   }
+
+  void _gameOver() {
+    GameStore.isGameOver = true;
+  }
+
+  void restartGame() {
+    GameStore.isGameOver = false;
+    score = 0;
+    startGame();
+  }
+
+  void pauseGame() {
+    GameStore.isPaused = true;
+  }
+
+  // void resumeGame() {
+
+  //   gameLoop();
+  // }
 }

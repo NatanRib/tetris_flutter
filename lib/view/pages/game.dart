@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tetris/model/pieces/piece_direction_enum.dart';
+import 'package:tetris/model/store/game_store.dart';
 import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/utils/my_colors.dart';
+import 'package:tetris/view/pages/home.dart';
 import 'package:tetris/view/widgets/board.dart';
 import 'package:tetris/view/widgets/input_controllers.dart';
 
@@ -27,9 +29,23 @@ class _BoardState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    if (controller.gameOver) gameOver(context);
+    if (GameStore.isGameOver) gameOver(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            controller.pauseGame();
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => Home()));
+            });
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 50,
+            color: MyColors.yellow,
+          ),
+        ),
         elevation: 0,
         backgroundColor: MyColors.blueGrey,
         title: Text(
