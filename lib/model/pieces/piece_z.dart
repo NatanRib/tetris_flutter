@@ -4,12 +4,12 @@ import 'package:tetris/utils/board_utils.dart';
 
 class PieceZ extends Piece {
   @override
+  Color color = const Color.fromARGB(255, 32, 255, 132);
+  @override
   List<int> currentPixels = [4, 5, 13, 14];
   @override
   List<int> defaultPixels = [4, 5, 13, 14];
   @override
-  Color color = const Color.fromARGB(255, 32, 255, 132);
-
   @override
   int rotationStatesLenght = 2;
 

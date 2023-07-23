@@ -79,21 +79,5 @@ class InputController extends StatelessWidget {
         size: 50,
       ),
     );
-    // IconButton(
-    //   padding: edges,
-    //   hoverColor: Colors.red,
-    //   onPressed: () => onPressed(),
-    //   style: IconButton.styleFrom(
-    //     backgroundColor: const Color(0xFF001849),
-    //     foregroundColor: const Color(0xFF001849),
-    //   ),
-    //   icon: Icon(
-    //     icon,
-    //     size: 50,
-    //     textDirection: isInvert ? TextDirection.rtl : TextDirection.ltr,
-    //     color: Colors.white,
-    //   ),
-    //   color: const Color(0xFF001849),
-    // );
   }
 }

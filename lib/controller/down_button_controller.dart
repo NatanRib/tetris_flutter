@@ -5,7 +5,7 @@ class DownButtonController {
 
   void initPress(Function downButtonFunction) {
     pressed = true;
-    Timer.periodic(const Duration(milliseconds: 150), (timer) {
+    Timer.periodic(const Duration(milliseconds: 250), (timer) {
       if (pressed) downButtonFunction();
     });
   }

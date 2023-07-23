@@ -49,7 +49,6 @@ class _BoardState extends State<Game> {
                     builder: (_) => Home(),
                   ),
                 );
-                // Navigator.pop(context);
               },
             );
           },

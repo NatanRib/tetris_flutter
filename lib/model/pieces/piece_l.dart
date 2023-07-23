@@ -4,7 +4,7 @@ import 'package:tetris/utils/board_utils.dart';
 
 class PieceL extends Piece {
   @override
-  Color color = const Color.fromARGB(255, 132, 1, 150);
+  Color color = const Color.fromARGB(255, 252, 79, 10);
   @override
   List<int> currentPixels = [4, 14, 24, 25];
   @override
