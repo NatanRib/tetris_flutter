@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tetris/model/pieces/piece_direction_enum.dart';
-import 'package:tetris/model/store/game_store.dart';
+import 'package:tetris/controller/store/game_store.dart';
 import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/utils/my_colors.dart';
 import 'package:tetris/view/pages/home.dart';
@@ -11,7 +11,8 @@ import 'package:tetris/view/widgets/input_controllers.dart';
 import '../../controller/game_controller.dart';
 
 class Game extends StatefulWidget {
-  const Game({super.key});
+  final GameStore store;
+  const Game({super.key, required this.store});
 
   @override
   State<Game> createState() => _BoardState();
@@ -23,22 +24,34 @@ class _BoardState extends State<Game> {
   @override
   void initState() {
     super.initState();
-    controller = GameController(() => setState(() {}));
-    controller.startGame();
+    controller = GameController(
+      updateState: () => setState(
+        () {},
+      ),
+      store: widget.store,
+    );
+    controller.init();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (GameStore.isGameOver) gameOver(context);
+    if (widget.store.isGameOver) gameOver(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             controller.pauseGame();
-            SchedulerBinding.instance.addPostFrameCallback((_) {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => Home()));
-            });
+            SchedulerBinding.instance.addPostFrameCallback(
+              (_) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => Home(),
+                  ),
+                );
+                // Navigator.pop(context);
+              },
+            );
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -49,7 +62,7 @@ class _BoardState extends State<Game> {
         elevation: 0,
         backgroundColor: MyColors.blueGrey,
         title: Text(
-          "Score: ${controller.score}",
+          "Score: ${widget.store.score}",
           style: const TextStyle(
             color: MyColors.yellow,
             fontSize: 24,
@@ -67,9 +80,9 @@ class _BoardState extends State<Game> {
             children: [
               Expanded(
                 child: Board(
-                  piece: controller.currentPiece,
+                  piece: widget.store.currentPiece,
                   backgroundColor: MyColors.blueGrey,
-                  ocupedPixels: controller.occupiedBoardPixels,
+                  ocupedPixels: widget.store.occupiedBoardPixels,
                   height: constraints.maxHeight * 0.782 / boardColumnLenght,
                   width: constraints.maxWidth / boardRowLenght,
                 ),
@@ -84,7 +97,7 @@ class _BoardState extends State<Game> {
                   downButtonFunction: () =>
                       controller.movePiece(PieceDirectionEnum.down),
                   rotateButtonFunction: () => controller.rotatePiece(),
-                  score: controller.score,
+                  score: widget.store.score,
                 ),
               ),
             ],
@@ -113,7 +126,7 @@ class _BoardState extends State<Game> {
               Padding(
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
-                  'Your score: ${controller.score}',
+                  'Your score: ${widget.store.score}',
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,

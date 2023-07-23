@@ -1,7 +1,12 @@
-import 'package:tetris/model/store/game_store.dart';
+import 'package:tetris/controller/store/game_store.dart';
 
 class HomeController {
-  void resumeGame() {
-    GameStore.isPaused = false;
+  GameStore store;
+
+  HomeController(this.store);
+
+  void newGame() {
+    store.isGameOver = false;
+    store.isPaused = false;
   }
 }

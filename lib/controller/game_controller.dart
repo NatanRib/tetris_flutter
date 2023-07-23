@@ -11,13 +11,12 @@ import 'package:tetris/model/pieces/piece_o.dart';
 import 'package:tetris/model/pieces/piece_s.dart';
 import 'package:tetris/model/pieces/piece_t.dart';
 import 'package:tetris/model/pieces/piece_z.dart';
-import 'package:tetris/model/store/game_store.dart';
+import 'package:tetris/controller/store/game_store.dart';
 import 'package:tetris/utils/board_utils.dart';
 
 class GameController {
-  late Piece currentPiece;
   Function updateState;
-  late List<List<Color?>> occupiedBoardPixels;
+  GameStore store;
   List<Piece> availablePieces = [
     PieceL(),
     PieceO(),
@@ -29,20 +28,28 @@ class GameController {
     PieceI()
   ];
   final velocity = const Duration(milliseconds: 800);
-  int score = 0;
-  int currentPieceRotateState = 1;
-  // bool isGameOver = false;
-  // bool isPauseGame = false;
 
-  GameController(this.updateState);
+  GameController({
+    required this.updateState,
+    required this.store,
+  });
+
+  void init() {
+    if (store.isPaused) {
+      resumeGame();
+    } else {
+      startGame();
+    }
+  }
 
   void startGame() {
-    occupiedBoardPixels = List.generate(
-      boardColumnLenght,
-      (i) => List.generate(boardRowLenght, (j) => null),
-    );
-    generatePiece();
+    store.resetData();
+    generateNewPiece();
+    gameLoop();
+  }
 
+  void resumeGame() {
+    store.isPaused = false;
     gameLoop();
   }
 
@@ -52,26 +59,26 @@ class GameController {
       _movePieceDown();
       cleanCompletedRow();
       updateState();
-      if (GameStore.isGameOver || GameStore.isPaused) timer.cancel();
+      if (store.isGameOver || store.isPaused) timer.cancel();
     });
   }
 
   void movePiece(PieceDirectionEnum direction) {
     if (!checkCollision(direction)) {
-      currentPiece.movePiece(direction);
+      store.currentPiece.movePiece(direction);
       updateState();
     }
   }
 
   void _movePieceDown() {
     if (!checkCollision(PieceDirectionEnum.down)) {
-      currentPiece.movePiece(PieceDirectionEnum.down);
+      store.currentPiece.movePiece(PieceDirectionEnum.down);
     }
   }
 
   bool checkCollision(PieceDirectionEnum direction) {
-    for (var i = 0; i < currentPiece.currentPixels.length; i++) {
-      int currentPixel = currentPiece.currentPixels[i];
+    for (var i = 0; i < store.currentPiece.currentPixels.length; i++) {
+      int currentPixel = store.currentPiece.currentPixels[i];
       int rowPosition = getRowOfIndex(currentPixel);
       int collumnPosition = getColumnOfIndex(currentPixel);
 
@@ -87,7 +94,7 @@ class GameController {
           break;
       }
       List<Color?>? occupiedRow = rowPosition >= 0
-          ? occupiedBoardPixels.elementAtOrNull(rowPosition)
+          ? store.occupiedBoardPixels.elementAtOrNull(rowPosition)
           : null;
 
       if (rowPosition >= boardColumnLenght ||
@@ -106,27 +113,27 @@ class GameController {
 
   void checkLanding() {
     if (checkCollision(PieceDirectionEnum.down)) {
-      for (var i = 0; i < currentPiece.currentPixels.length; i++) {
-        int column = getColumnOfIndex(currentPiece.currentPixels[i]);
-        int row = getRowOfIndex(currentPiece.currentPixels[i]);
-        if (row < 0 && !GameStore.isGameOver) {
+      for (var i = 0; i < store.currentPiece.currentPixels.length; i++) {
+        int column = getColumnOfIndex(store.currentPiece.currentPixels[i]);
+        int row = getRowOfIndex(store.currentPiece.currentPixels[i]);
+        if (row < 0 && !store.isGameOver) {
           _gameOver();
           return;
         }
         if (row >= 0 && column >= 0 && row <= boardColumnLenght) {
-          occupiedBoardPixels[row][column] = currentPiece.color;
+          store.occupiedBoardPixels[row][column] = store.currentPiece.color;
         }
       }
-      generatePiece();
+      generateNewPiece();
     }
   }
 
-  void generatePiece() {
-    currentPieceRotateState = 1;
+  void generateNewPiece() {
+    store.currentPieceRotateState = 1;
     int randomPieceIndex = Random().nextInt(availablePieces.length);
     Piece newPiece = availablePieces[randomPieceIndex]
       ..initializeOnTopOfBoard();
-    currentPiece = newPiece;
+    store.currentPiece = newPiece;
   }
 
   void cleanCompletedRow() {
@@ -134,12 +141,12 @@ class GameController {
     for (var row in completedRows) {
       for (var i = row; i >= 0; i--) {
         if (i == 0) {
-          occupiedBoardPixels[i] =
+          store.occupiedBoardPixels[i] =
               List.generate(boardRowLenght, (boardRowLenght) => null);
           continue;
         }
-        List<Color?> nextRpw = List.from(occupiedBoardPixels[i - 1]);
-        occupiedBoardPixels[i] = nextRpw;
+        List<Color?> nextRpw = List.from(store.occupiedBoardPixels[i - 1]);
+        store.occupiedBoardPixels[i] = nextRpw;
       }
     }
   }
@@ -147,7 +154,7 @@ class GameController {
   List<int> _getCompletedRows() {
     List<int> completedRows = [];
     for (var i = 0; i < boardColumnLenght; i++) {
-      if (occupiedBoardPixels[i].every((element) => element != null)) {
+      if (store.occupiedBoardPixels[i].every((element) => element != null)) {
         completedRows.add(i);
       }
     }
@@ -156,18 +163,19 @@ class GameController {
   }
 
   void increaseScore(int multiply) {
-    score += 100 * multiply;
+    store.score += 100 * multiply;
   }
 
   void rotatePiece() {
-    var side = _getDirectionOnBoard(currentPiece.currentPixels[1]);
+    var side = _getDirectionOnBoard(store.currentPiece.currentPixels[1]);
     if (checkCollision(side)) return;
-    currentPieceRotateState++;
-    if (currentPieceRotateState <= currentPiece.rotationStatesLenght) {
-      currentPiece.rotate(currentPieceRotateState);
+    store.currentPieceRotateState++;
+    if (store.currentPieceRotateState <=
+        store.currentPiece.rotationStatesLenght) {
+      store.currentPiece.rotate(store.currentPieceRotateState);
     } else {
-      currentPieceRotateState = 1;
-      currentPiece.rotate(1);
+      store.currentPieceRotateState = 1;
+      store.currentPiece.rotate(1);
     }
     updateState();
   }
@@ -179,21 +187,16 @@ class GameController {
   }
 
   void _gameOver() {
-    GameStore.isGameOver = true;
+    store.isGameOver = true;
   }
 
   void restartGame() {
-    GameStore.isGameOver = false;
-    score = 0;
+    store.isGameOver = false;
+    store.score = 0;
     startGame();
   }
 
   void pauseGame() {
-    GameStore.isPaused = true;
+    store.isPaused = true;
   }
-
-  // void resumeGame() {
-
-  //   gameLoop();
-  // }
 }
