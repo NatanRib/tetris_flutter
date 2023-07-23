@@ -15,6 +15,7 @@ class GameStore {
   int score = 0;
   int currentPieceRotateState = 1;
   late Piece currentPiece;
+  late Piece nextPiece;
   List<List<Color?>> occupiedBoardPixels = List.generate(
     boardColumnLenght,
     (i) => List.generate(boardRowLenght, (j) => null),

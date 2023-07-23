@@ -9,6 +9,8 @@ class PieceO extends Piece {
   @override
   List<int> defaultPixels = [4, 5, 14, 15];
   @override
+  List<int> decreasedPixels = [0, 1, 4, 3];
+  @override
   int rotationStatesLenght = 1;
 
   @override

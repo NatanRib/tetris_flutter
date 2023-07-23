@@ -44,7 +44,7 @@ class GameController {
 
   void startGame() {
     store.resetData();
-    generateNewPiece();
+    generatePieces();
     gameLoop();
   }
 
@@ -125,16 +125,29 @@ class GameController {
           store.occupiedBoardPixels[row][column] = store.currentPiece.color;
         }
       }
-      generateNewPiece();
+      generateNextPiece();
     }
   }
 
-  void generateNewPiece() {
+  void generatePieces() {
     store.currentPieceRotateState = 1;
-    int randomPieceIndex = Random().nextInt(availablePieces.length);
-    Piece newPiece = availablePieces[randomPieceIndex]
+    int randomCurrentPieceIndex = Random().nextInt(availablePieces.length);
+    int randomNextPieceIndex = Random().nextInt(availablePieces.length);
+    Piece newCurrentPiece = availablePieces[randomCurrentPieceIndex]
       ..initializeOnTopOfBoard();
-    store.currentPiece = newPiece;
+    Piece newNextPiece = availablePieces[randomNextPieceIndex]
+      ..initializeOnTopOfBoard();
+    store.nextPiece = newNextPiece;
+    store.currentPiece = newCurrentPiece;
+  }
+
+  void generateNextPiece() {
+    store.currentPieceRotateState = 1;
+    int randomNextPieceIndex = Random().nextInt(availablePieces.length);
+    Piece newNextPiece = availablePieces[randomNextPieceIndex]
+      ..initializeOnTopOfBoard();
+    store.currentPiece = store.nextPiece;
+    store.nextPiece = newNextPiece;
   }
 
   void cleanCompletedRow() {

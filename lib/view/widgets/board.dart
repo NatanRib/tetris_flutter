@@ -7,14 +7,12 @@ import 'package:tetris/view/widgets/pixel.dart';
 class Board extends StatelessWidget {
   final double height;
   final Piece piece;
-  final Color backgroundColor;
   final List<List<Color?>> ocupedPixels;
 
   const Board({
     super.key,
     required this.height,
     required this.piece,
-    required this.backgroundColor,
     required this.ocupedPixels,
   });
 
@@ -23,7 +21,7 @@ class Board extends StatelessWidget {
     var mainAxisExtent = (height * 0.96) / (boardColumnLenght + 1);
     return Container(
       height: height,
-      color: backgroundColor,
+      color: MyColors.blueGrey,
       child: GridView.builder(
         itemCount: boardColumnLenght * boardRowLenght,
         physics: const NeverScrollableScrollPhysics(),

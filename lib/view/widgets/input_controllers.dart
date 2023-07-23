@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tetris/controller/store/game_store.dart';
 import 'package:tetris/view/widgets/down_button.dart';
+
+import 'next_piece_indicator.dart';
 
 class InputController extends StatelessWidget {
   final Function leftButtonFunction;
@@ -7,6 +10,7 @@ class InputController extends StatelessWidget {
   final Function downButtonFunction;
   final Function rotateButtonFunction;
   final int score;
+  final double height;
 
   const InputController({
     super.key,
@@ -15,51 +19,43 @@ class InputController extends StatelessWidget {
     required this.downButtonFunction,
     required this.rotateButtonFunction,
     required this.score,
+    required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
+    GameStore gameStore = GameStore();
+    var width = MediaQuery.sizeOf(context).width;
+    return SizedBox(
+      height: height,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 12.0),
-                child: button(
-                  Icons.arrow_back,
-                  leftButtonFunction,
-                  false,
-                  const EdgeInsets.only(left: 8),
-                ),
-              ),
-              button(
-                Icons.rotate_right,
-                rotateButtonFunction,
-                false,
-                EdgeInsets.zero,
-              ),
-            ],
+          button(
+            Icons.arrow_back,
+            leftButtonFunction,
+            false,
+            const EdgeInsets.only(left: 8),
           ),
-
-          //TODO: Next piece
-          Row(
-            children: [
-              DownButton(downButtonFunction: downButtonFunction),
-              Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: button(
-                  Icons.arrow_back,
-                  rightButtonFunction,
-                  true,
-                  const EdgeInsets.only(right: 8),
-                ),
-              )
-            ],
-          )
+          button(
+            Icons.rotate_right,
+            rotateButtonFunction,
+            false,
+            EdgeInsets.zero,
+          ),
+          NextPieceIndicator(
+            nextPiece: gameStore.nextPiece,
+            height: height * 1.15,
+            width: width * 0.13,
+          ),
+          DownButton(downButtonFunction: downButtonFunction),
+          button(
+            Icons.arrow_back,
+            rightButtonFunction,
+            true,
+            const EdgeInsets.only(right: 8),
+          ),
         ],
       ),
     );

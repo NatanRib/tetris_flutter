@@ -82,23 +82,20 @@ class _BoardState extends State<Game> {
                 height: boardHeight,
                 child: Board(
                   piece: widget.store.currentPiece,
-                  backgroundColor: MyColors.blueGrey,
                   ocupedPixels: widget.store.occupiedBoardPixels,
                   height: boardHeight,
                 ),
               ),
-              SizedBox(
+              InputController(
+                leftButtonFunction: () =>
+                    controller.movePiece(PieceDirectionEnum.left),
+                rightButtonFunction: () =>
+                    controller.movePiece(PieceDirectionEnum.right),
+                downButtonFunction: () =>
+                    controller.movePiece(PieceDirectionEnum.down),
+                rotateButtonFunction: () => controller.rotatePiece(),
+                score: widget.store.score,
                 height: constraints.maxHeight * 0.14,
-                child: InputController(
-                  leftButtonFunction: () =>
-                      controller.movePiece(PieceDirectionEnum.left),
-                  rightButtonFunction: () =>
-                      controller.movePiece(PieceDirectionEnum.right),
-                  downButtonFunction: () =>
-                      controller.movePiece(PieceDirectionEnum.down),
-                  rotateButtonFunction: () => controller.rotatePiece(),
-                  score: widget.store.score,
-                ),
               ),
             ],
           ),
@@ -140,7 +137,7 @@ class _BoardState extends State<Game> {
                       "Restart",
                       style: TextStyle(
                         fontSize: 32,
-                        color: Colors.black,
+                        color: MyColors.yellowLight,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

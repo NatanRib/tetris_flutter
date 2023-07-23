@@ -10,6 +10,8 @@ class PieceJ extends Piece {
   @override
   List<int> defaultPixels = [5, 15, 25, 24];
   @override
+  List<int> decreasedPixels = [1, 4, 7, 6];
+  @override
   int rotationStatesLenght = 4;
 
   @override

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class Pixel extends StatelessWidget {
   final Color color;
   final String? text;
+  final double? radius;
   const Pixel({
     super.key,
     required this.color,
     this.text,
+    this.radius,
   });
 
   @override
@@ -15,7 +17,7 @@ class Pixel extends StatelessWidget {
       margin: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(radius == null ? 8 : radius!),
       ),
       child: Center(
         child: text != null

@@ -5,6 +5,7 @@ import 'package:tetris/utils/board_utils.dart';
 abstract class Piece {
   abstract List<int> defaultPixels;
   abstract List<int> currentPixels;
+  abstract List<int> decreasedPixels;
   abstract int rotationStatesLenght;
   abstract Color color;
 
