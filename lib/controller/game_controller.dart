@@ -27,7 +27,7 @@ class GameController {
     PieceO(),
     PieceI()
   ];
-  final velocity = const Duration(milliseconds: 800);
+  final velocity = const Duration(milliseconds: 650);
 
   GameController({
     required this.updateState,
