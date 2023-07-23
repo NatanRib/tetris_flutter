@@ -1,6 +1,21 @@
 # Tetris Flutter
 
-A Tetris game build in project without 3rd packages.
+A Tetris game build in flutter without 3rd packages.
+
+The game was made solely and exclusively with the flutter framework without external packages, it contains all the features of classic tetris, such as:
+
+* Score for each line completed;
+* All pieces with rotation to change position;
+* Button to accelerate the descent of the piece;
+* Pause, resume and new game;
+* Game over if the pieces reach the top;
+* Display of what will be the next piece;
+
+## Menu
+[!plot](./prints/Screenshot_1690142675.png)
+
+## In game
+[!plot](./prints/Screenshot_1690142842.png)
 
 ## Getting Started
 
