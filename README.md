@@ -12,10 +12,10 @@ The game was made solely and exclusively with the flutter framework without exte
 * Display of what will be the next piece;
 
 ## Menu
-[!plot](./prints/Screenshot_1690142675.png)
+![Screenshot](./prints/Screenshot_1690142675.png)
 
 ## In game
-[!plot](./prints/Screenshot_1690142842.png)
+![Screenshot](./prints/Screenshot_1690142842.png)
 
 ## Getting Started
 
