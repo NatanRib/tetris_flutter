@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:tetris/model/pieces/piece_direction_enum.dart';
 import 'package:tetris/controller/store/game_store.dart';
-import 'package:tetris/utils/board_utils.dart';
 import 'package:tetris/utils/my_colors.dart';
 import 'package:tetris/view/pages/home.dart';
 import 'package:tetris/view/widgets/board.dart';
@@ -72,18 +71,19 @@ class _BoardState extends State<Game> {
       ),
       backgroundColor: MyColors.blueGrey,
       body: LayoutBuilder(builder: (context, constraints) {
+        var boardHeight = constraints.maxHeight * 0.8;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
+              SizedBox(
+                height: boardHeight,
                 child: Board(
                   piece: widget.store.currentPiece,
                   backgroundColor: MyColors.blueGrey,
                   ocupedPixels: widget.store.occupiedBoardPixels,
-                  height: constraints.maxHeight * 0.782 / boardColumnLenght,
-                  width: constraints.maxWidth / boardRowLenght,
+                  height: boardHeight,
                 ),
               ),
               SizedBox(

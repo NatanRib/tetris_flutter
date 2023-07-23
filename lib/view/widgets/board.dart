@@ -6,7 +6,6 @@ import 'package:tetris/view/widgets/pixel.dart';
 
 class Board extends StatelessWidget {
   final double height;
-  final double width;
   final Piece piece;
   final Color backgroundColor;
   final List<List<Color?>> ocupedPixels;
@@ -14,7 +13,6 @@ class Board extends StatelessWidget {
   const Board({
     super.key,
     required this.height,
-    required this.width,
     required this.piece,
     required this.backgroundColor,
     required this.ocupedPixels,
@@ -22,39 +20,33 @@ class Board extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mainAxisExtent = (height * 0.96) / (boardColumnLenght + 1);
     return Container(
+      height: height,
       color: backgroundColor,
       child: GridView.builder(
         itemCount: boardColumnLenght * boardRowLenght,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: boardRowLenght,
-          mainAxisExtent: height * 0.98,
+          mainAxisExtent: mainAxisExtent,
           mainAxisSpacing: 3,
           crossAxisSpacing: 3,
         ),
         itemBuilder: (context, index) {
           int row = getRowOfIndex(index);
           int column = getColumnOfIndex(index);
-          double pixelWidth = width / boardRowLenght;
-          double pixelHeight = height / boardColumnLenght;
           if (piece.currentPixels.contains(index)) {
             return Pixel(
               color: piece.color,
-              width: pixelWidth,
-              height: pixelHeight,
             );
           } else if (ocupedPixels[row][column] != null) {
             return Pixel(
               color: ocupedPixels[row][column]!,
-              width: pixelWidth,
-              height: pixelHeight,
             );
           } else {
-            return Pixel(
+            return const Pixel(
               color: MyColors.grey,
-              width: pixelWidth,
-              height: pixelHeight,
             );
           }
         },

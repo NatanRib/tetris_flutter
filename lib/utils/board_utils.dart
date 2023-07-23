@@ -1,4 +1,4 @@
-const boardColumnLenght = 18;
+const boardColumnLenght = 17;
 const boardRowLenght = 10;
 
 int getRowOfIndex(int index) {

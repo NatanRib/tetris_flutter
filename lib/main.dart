@@ -32,7 +32,6 @@ void main() {
         ),
       ),
       home: Home(),
-      // home: const Game(),
     ),
   );
 }
