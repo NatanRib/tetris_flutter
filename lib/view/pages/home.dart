@@ -32,25 +32,28 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: MyColors.red,
-                  width: 8,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 42.0),
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyColors.red,
+                    width: 8,
+                  ),
                 ),
-              ),
-              child: const Center(
-                child: Text(
-                  'Tettler',
-                  style: TextStyle(fontSize: 42, color: MyColors.red),
+                child: const Center(
+                  child: Text(
+                    'Tettler',
+                    style: TextStyle(fontSize: 42, color: MyColors.red),
+                  ),
                 ),
               ),
             ),
             if (widget.store.isPaused)
               Padding(
-                padding: const EdgeInsets.only(top: 42.0),
+                padding: const EdgeInsets.only(bottom: 18.0),
                 child: NavigationPageButton(
                   text: 'Resume',
                   navigateFunction: () {
@@ -63,20 +66,17 @@ class _HomeState extends State<Home> {
                   },
                 ),
               ),
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: NavigationPageButton(
-                text: 'New game',
-                navigateFunction: () {
-                  controller.newGame();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Game(store: widget.store),
-                    ),
-                  );
-                },
-              ),
+            NavigationPageButton(
+              text: 'New game',
+              navigateFunction: () {
+                controller.newGame();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Game(store: widget.store),
+                  ),
+                );
+              },
             )
           ],
         ),

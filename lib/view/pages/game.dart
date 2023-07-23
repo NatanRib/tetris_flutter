@@ -61,9 +61,10 @@ class _BoardState extends State<Game> {
         backgroundColor: MyColors.blueGrey,
         title: Text(
           "Score: ${widget.store.score}",
+          textAlign: TextAlign.center,
           style: const TextStyle(
             color: MyColors.yellow,
-            fontSize: 24,
+            fontSize: 28,
             fontWeight: FontWeight.bold,
           ),
         ),

@@ -163,7 +163,7 @@ class GameController {
   }
 
   void increaseScore(int multiply) {
-    store.score += 100 * multiply;
+    store.score += 10 * multiply;
   }
 
   void rotatePiece() {
