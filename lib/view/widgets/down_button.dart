@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:tetris/controller/store/game_store.dart';
 import 'package:tetris/utils/my_colors.dart';
 import 'package:tetris/controller/down_button_controller.dart';
 
 class DownButton extends StatefulWidget {
   final Function downButtonFunction;
-  const DownButton({super.key, required this.downButtonFunction});
+  const DownButton({
+    super.key,
+    required this.downButtonFunction,
+  });
 
   @override
   State<DownButton> createState() => _DownButtonState();
 }
 
 class _DownButtonState extends State<DownButton> {
-  DownButtonController downButtonController = DownButtonController();
+  late DownButtonController downButtonController;
+
+  @override
+  void initState() {
+    downButtonController = DownButtonController(GameStore());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

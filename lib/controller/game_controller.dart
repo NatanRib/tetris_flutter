@@ -113,6 +113,7 @@ class GameController {
 
   void checkLanding() {
     if (checkCollision(PieceDirectionEnum.down)) {
+      store.stopButtonDown = true;
       for (var i = 0; i < store.currentPiece.currentPixels.length; i++) {
         int column = getColumnOfIndex(store.currentPiece.currentPixels[i]);
         int row = getRowOfIndex(store.currentPiece.currentPixels[i]);

@@ -11,6 +11,7 @@ class GameStore {
 
   bool isGameOver = false;
   bool isPaused = false;
+  bool stopButtonDown = false;
   int score = 0;
   int currentPieceRotateState = 1;
   late Piece currentPiece;
