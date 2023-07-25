@@ -5,33 +5,28 @@ import 'package:tetris/utils/my_colors.dart';
 import 'package:tetris/view/widgets/pixel.dart';
 
 class Board extends StatelessWidget {
-  final double height;
   final Piece piece;
   final List<List<Color?>> ocupedPixels;
 
   const Board({
     super.key,
-    required this.height,
     required this.piece,
     required this.ocupedPixels,
   });
 
   @override
   Widget build(BuildContext context) {
-    var mainAxisExtent = (height * 0.96) / (boardColumnLenght + 1);
-    return Container(
-      height: height,
-      color: MyColors.blueGrey,
-      child: GridView.builder(
-        itemCount: boardColumnLenght * boardRowLenght,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: boardRowLenght,
-          mainAxisExtent: mainAxisExtent,
-          mainAxisSpacing: 3,
-          crossAxisSpacing: 3,
-        ),
-        itemBuilder: (context, index) {
+    var aspectRatio = MediaQuery.sizeOf(context).aspectRatio * 2.2;
+    var itemCount = boardColumnLenght * boardRowLenght;
+    return GridView.count(
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisCount: boardRowLenght,
+      childAspectRatio: aspectRatio,
+      mainAxisSpacing: 3,
+      crossAxisSpacing: 3,
+      children: List.generate(
+        itemCount,
+        (index) {
           int row = getRowOfIndex(index);
           int column = getColumnOfIndex(index);
           if (piece.currentPixels.contains(index)) {

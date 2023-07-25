@@ -4,13 +4,13 @@ import 'package:tetris/utils/board_utils.dart';
 
 class PieceZ extends Piece {
   @override
-  Color color = const Color.fromARGB(255, 69, 253, 152);
+  Color color = const Color.fromARGB(255, 55, 0, 206);
   @override
-  List<int> currentPixels = [4, 5, 13, 14];
+  List<int> currentPixels = [3, 4, 14, 15];
   @override
-  List<int> defaultPixels = [4, 5, 13, 14];
+  List<int> defaultPixels = [3, 4, 14, 15];
   @override
-  List<int> decreasedPixels = [2, 1, 4, 3];
+  List<int> decreasedPixels = [0, 1, 4, 5];
   @override
   int rotationStatesLenght = 2;
 
@@ -18,15 +18,15 @@ class PieceZ extends Piece {
   void rotate(int rotationState) {
     switch (rotationState) {
       case 2:
-        currentPixels[1] = currentPixels[1] + boardRowLenght - 1;
-        currentPixels[2] = currentPixels[2] - (boardRowLenght * 2);
-        currentPixels[3] = currentPixels[3] - boardRowLenght - 1;
+        currentPixels[0] = currentPixels[0] - boardRowLenght + 1;
+        currentPixels[2] = currentPixels[2] - boardRowLenght - 1;
+        currentPixels[3] = currentPixels[3] - 2;
         break;
       case 1:
-        currentPixels[0] = currentPixels[0] - boardRowLenght;
-        currentPixels[1] = currentPixels[1] - (boardRowLenght * 2) + 1;
-        currentPixels[2] = currentPixels[2] + boardRowLenght;
-        currentPixels[3] = currentPixels[3] + 1;
+        currentPixels[0] = currentPixels[0] - 1;
+        currentPixels[1] = currentPixels[1] - boardRowLenght;
+        currentPixels[2] = currentPixels[2] + 1;
+        currentPixels[3] = currentPixels[3] - boardRowLenght + 2;
         break;
     }
   }

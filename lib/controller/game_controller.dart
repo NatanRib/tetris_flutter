@@ -3,13 +3,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tetris/model/pieces/piece.dart';
-import 'package:tetris/model/pieces/piece_direction_enum.dart';
+import 'package:tetris/model/enums/piece_direction_enum.dart';
 import 'package:tetris/model/pieces/piece_i.dart';
 import 'package:tetris/model/pieces/piece_j.dart';
 import 'package:tetris/model/pieces/piece_l.dart';
 import 'package:tetris/model/pieces/piece_o.dart';
-import 'package:tetris/model/pieces/piece_s.dart';
 import 'package:tetris/model/pieces/piece_t.dart';
+import 'package:tetris/model/pieces/piece_s.dart';
 import 'package:tetris/model/pieces/piece_z.dart';
 import 'package:tetris/controller/store/game_store.dart';
 import 'package:tetris/utils/board_utils.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:tetris/model/pieces/piece_direction_enum.dart';
+import 'package:tetris/model/enums/piece_direction_enum.dart';
 import 'package:tetris/controller/store/game_store.dart';
 import 'package:tetris/utils/my_colors.dart';
 import 'package:tetris/view/pages/home.dart';
@@ -83,7 +83,6 @@ class _BoardState extends State<Game> {
                 child: Board(
                   piece: widget.store.currentPiece,
                   ocupedPixels: widget.store.occupiedBoardPixels,
-                  height: boardHeight,
                 ),
               ),
               InputController(
@@ -118,15 +117,17 @@ class _BoardState extends State<Game> {
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
+                  color: MyColors.red,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 4.0),
+                padding: const EdgeInsets.only(top: 24.0),
                 child: Text(
                   'Your score: ${widget.store.score}',
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
+                    color: MyColors.yellowLight,
                   ),
                 ),
               ),
